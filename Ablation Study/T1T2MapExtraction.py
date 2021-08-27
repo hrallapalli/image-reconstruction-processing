@@ -10,8 +10,11 @@ import os
 import numpy as np
 import nibabel as nib
 
-input_path = r'G:\MINCVM\PCLKO\PCP2-DTR\maps\\'
-output_path = r'G:\MINCVM\PCLKO\PCP2-DTR\maps\Extracted\\'
+# input_path = r'G:\MINCVM\PCLKO\PCP2-DTR\maps\\'
+# output_path = r'G:\MINCVM\PCLKO\PCP2-DTR\maps\Extracted\\'
+
+input_path = r'G:\MINCVM\PCLKO\HOPX-DTR\maps\\'
+output_path = r'G:\MINCVM\PCLKO\HOPX-DTR\maps\Extracted\\'
 
 for file in os.listdir(input_path):
     if file.endswith('.nii.gz'):
