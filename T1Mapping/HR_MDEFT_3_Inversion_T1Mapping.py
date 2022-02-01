@@ -14,9 +14,9 @@ import nibabel as nib
 #%%
 # define paths to NIFTI format images and load them
 
-PathToImageInversion1100 = r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20210715_124732_HR_Zip14_NoMn_M2_HR_Zip14_NoMn_1_1\23\ACQ_BRUKER_PVMT1_MDEFTX23P1.nii.gz'
-PathToImageInversion1500 = r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20210715_124732_HR_Zip14_NoMn_M2_HR_Zip14_NoMn_1_1\24\ACQ_BRUKER_PVMT1_MDEFTX24P1.nii.gz'
-PathToImageInversion2000 = r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20210715_124732_HR_Zip14_NoMn_M2_HR_Zip14_NoMn_1_1\25\ACQ_BRUKER_PVMT1_MDEFTX25P1.nii.gz'
+PathToImageInversion1100 = r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20210929_164631_YFP_AAV_NoMn_M1_HR_YFP_AAV_NoMn_2weekspostinj_1_1\ACQ_BRUKER_PVMT1_MDEFTX3P1.nii.gz'
+PathToImageInversion1500 = r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20210929_164631_YFP_AAV_NoMn_M1_HR_YFP_AAV_NoMn_2weekspostinj_1_1\ACQ_BRUKER_PVMT1_MDEFTX4P1.nii.gz'
+PathToImageInversion2000 = r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20210929_164631_YFP_AAV_NoMn_M1_HR_YFP_AAV_NoMn_2weekspostinj_1_1\ACQ_BRUKER_PVMT1_MDEFTX5P1.nii.gz'
 
 ImageInversion1100 = nib.load(PathToImageInversion1100)
 ImageInversion1500 = nib.load(PathToImageInversion1500)
@@ -63,5 +63,5 @@ FitSlopeCorrected = np.abs(FitSlope)
 OutFit = nib.Nifti1Image(FitSlopeCorrected, ImageAffine)
 OutResiduals = nib.Nifti1Image(FitResiduals, ImageAffine)
 
-nib.save(OutFit, os.path.join(r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20210715_124732_HR_Zip14_NoMn_M2_HR_Zip14_NoMn_1_1', 'testT1Map.nii.gz'))
-nib.save(OutResiduals, os.path.join(r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20210715_124732_HR_Zip14_NoMn_M2_HR_Zip14_NoMn_1_1', 'testResiduals.nii.gz'))  
+nib.save(OutFit, os.path.join(r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20210929_164631_YFP_AAV_NoMn_M1_HR_YFP_AAV_NoMn_2weekspostinj_1_1', 'testT1Map.nii.gz'))
+nib.save(OutResiduals, os.path.join(r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20210929_164631_YFP_AAV_NoMn_M1_HR_YFP_AAV_NoMn_2weekspostinj_1_1', 'testResiduals.nii.gz'))  

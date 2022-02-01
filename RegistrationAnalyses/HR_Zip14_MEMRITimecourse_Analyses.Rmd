@@ -1,0 +1,74 @@
+---
+title: "HR_Zip14_MEMRITimecourse_Analyses"
+author: "Hari Rallapalli"
+date: "10/27/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(tidyverse)
+```
+```{r}
+strcorrect <- function(x){
+  x %>% noquote() %>% gsub(", ",",",.) %>% gsub("\\[|\\]", "", .) %>% gsub("[\r\n]", "", .) %>% str_split(.," ")
+}
+```
+
+```{r}
+df <- read.csv("\\\\nindsdirfs2\\shares\\LFMI\\FMM\\Shared\\rallapallih\\Zip14\\RawImages\\Analysis\\VoxelWiseIntensities.csv", header = TRUE, stringsAsFactors = FALSE) %>%
+  mutate(values = sapply(values,strcorrect))
+```
+
+```{r}
+df <- df %>% 
+  mutate(timepoint = ifelse(str_detect(image,"00hrs"),0,
+                            ifelse(str_detect(image,"04hrs"),4,
+                            ifelse(str_detect(image,"08hrs"),8,
+                            ifelse(str_detect(image,"12hrs"),12,
+                            ifelse(str_detect(image,"24hrs"),24,
+                            ifelse(str_detect(image,"48hrs"),48,
+                            ifelse(str_detect(image,"01week"),168,
+                            -1))))))))
+```
+
+```{r}
+df <- df %>% 
+  mutate(condition = ifelse(str_detect(image,"Cryocoil"),"No Injection",
+                            ifelse(str_detect(image,"Zip14"),"Zip14",
+                                   "YFP")))
+```
+
+```{r}
+df <- df %>% 
+  mutate(mouse = sub("_T.*", "", image)) %>%
+  mutate(sex = ifelse(str_detect(mouse,"_F"),"Female","Male"))
+```
+
+```{r}
+df <-  df %>% mutate(values = as.numeric(unlist(values)))
+```
+
+               
+               
+               col.names = c("V1" = "Filenames", "V2" = "PCL", "V3" = "WM", "V4" = "ML", "V5" = "IGL")) %>%
+  mutate(mouse = str_extract(Filenames, "PCP2CRE_B\\d+_\\w\\d*"),
+         maptype = "T1") %>% 
+  group_by(mouse) %>%
+  mutate(toxin = ifelse(str_detect(mouse,"_C"),"NoDTR","DTR"),
+         batch = str_extract(mouse,"B\\d"),
+         background = sub("_.*", "", mouse)) %>%
+  mutate(PCL = sapply(PCL,strcorrect),
+         WM = sapply(WM,strcorrect),
+         ML = sapply(ML,strcorrect),
+         IGL = sapply(IGL,strcorrect)) %>%
+  gather(roi,measurement,PCL,WM,ML,IGL) %>% 
+  unnest() %>%
+  mutate(measurement = (1000/as.numeric(measurement))) %>%
+  arrange(mouse) %>%
+  na.omit()
+```

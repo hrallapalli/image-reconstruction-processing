@@ -13,8 +13,8 @@ import nibabel as nib
 # input_path = r'G:\MINCVM\PCLKO\PCP2-DTR\maps\\'
 # output_path = r'G:\MINCVM\PCLKO\PCP2-DTR\maps\Extracted\\'
 
-input_path = r'G:\MINCVM\PCLKO\HOPX-DTR\maps\\'
-output_path = r'G:\MINCVM\PCLKO\HOPX-DTR\maps\Extracted\\'
+input_path = r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20211202_Controls\Maps\\'
+output_path = r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20211202_Controls\Maps\Extracted\\'
 
 for file in os.listdir(input_path):
     if file.endswith('.nii.gz'):
