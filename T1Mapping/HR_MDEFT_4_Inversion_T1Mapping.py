@@ -13,13 +13,15 @@ import nibabel as nib
 
 #%%
 # define paths to NIFTI format images and load them
+baseimagepath = r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20220503_140933_Zip14_AAV_ICPMS_Round2_B_M1_Zip14_AAV_ICPMS_Round2_B_1_1'
 
-baseimagepath = r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20220427_143442_HR_Zip14_PHPeB_IC_F3_HR_Zip14_PHPeB_IC_1_1'
 
-PathToImageInversion1100 = os.path.join(baseimagepath, r'ACQ_BRUKER_PVMHR_T1_MDEFT_1100X3P1.nii.gz')
-PathToImageInversion1500 = os.path.join(baseimagepath, r'ACQ_BRUKER_PVMHR_T1_MDEFT_1500X4P1.nii.gz')
-PathToImageInversion2000 = os.path.join(baseimagepath, r'ACQ_BRUKER_PVMHR_T1_MDEFT_2000X5P1.nii.gz')
+PathToImageInversion400  = os.path.join(baseimagepath, r'ACQ_BRUKER_PVMHR_T1_MDEFT_400X5P1.nii.gz')
+PathToImageInversion1100 = os.path.join(baseimagepath, r'ACQ_BRUKER_PVMHR_T1_MDEFT_1100X2P1.nii.gz')
+PathToImageInversion1500 = os.path.join(baseimagepath, r'ACQ_BRUKER_PVMHR_T1_MDEFT_1500X3P1.nii.gz')
+PathToImageInversion2000 = os.path.join(baseimagepath, r'ACQ_BRUKER_PVMHR_T1_MDEFT_2000X4P1.nii.gz')
 
+ImageInversion400  = nib.load(PathToImageInversion400)
 ImageInversion1100 = nib.load(PathToImageInversion1100)
 ImageInversion1500 = nib.load(PathToImageInversion1500)
 ImageInversion2000 = nib.load(PathToImageInversion2000)
@@ -28,6 +30,7 @@ ImageAffine = ImageInversion1100.affine
 
 #%%
 # get image matrix data and shape
+Inversion400  = ImageInversion400.get_fdata()
 Inversion1100 = ImageInversion1100.get_fdata()
 Inversion1500 = ImageInversion1500.get_fdata()
 Inversion2000 = ImageInversion2000.get_fdata()
@@ -41,7 +44,7 @@ NumPoints = np.product(ImageShape)
 # signal(InversionTime) = abs(a + b*exp(-TI/T1))
 # I am going to assume a = 0 and b = 1 because I don't know any better
 
-InversionTimes = np.array((1100,1500,2000), dtype = 'float64')
+InversionTimes = np.array((400,1100,1500,2000), dtype = 'float64')
 InversionTimes = np.vstack([InversionTimes, np.ones(len(InversionTimes))]).T
 
 #%%
@@ -53,7 +56,7 @@ for i in range(ImageShape[0]):
        for j in range(ImageShape[1]):
             for k in range(ImageShape[2]):
                 
-                Signal = np.array((np.log(Inversion1100[i][j][k]),np.log(Inversion1500[i][j][k]),np.log(Inversion2000[i][j][k])))
+                Signal = np.array((np.log(Inversion400[i][j][k]),np.log(Inversion1100[i][j][k]),np.log(Inversion1500[i][j][k]),np.log(Inversion2000[i][j][k])))
             
             
                 (FitSlope[i][j][k], FitOffset[i][j][k]), FitResiduals[i][j][k] = np.linalg.lstsq(InversionTimes/1000, Signal, rcond=None)[0:2]
@@ -68,5 +71,5 @@ OutResiduals = nib.Nifti1Image(FitResiduals, ImageAffine)
 if not os.path.exists(os.path.join(baseimagepath,'analysis')):
     os.makedirs(os.path.join(baseimagepath,'analysis'))
 
-nib.save(OutFit, os.path.join(baseimagepath, 'analysis','test3T1Map.nii.gz'))
-nib.save(OutResiduals, os.path.join(baseimagepath, 'analysis','test3Residuals.nii.gz'))  
+nib.save(OutFit, os.path.join(baseimagepath, 'analysis','testT1Map.nii.gz'))
+nib.save(OutResiduals, os.path.join(baseimagepath, 'analysis','testResiduals.nii.gz'))  
