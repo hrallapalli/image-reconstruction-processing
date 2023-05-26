@@ -14,7 +14,7 @@ import nibabel as nib
 #%%
 # define paths to NIFTI format images and load them
 
-baseimagepath = r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20220427_143442_HR_Zip14_PHPeB_IC_F3_HR_Zip14_PHPeB_IC_1_1'
+baseimagepath = r'\\nindsdirfs2\shares\LFMI\FMM\Shared\rallapallih\ScanData\20220919_173951_HR_Zip14_PHPeB_IV_NAIVE_M2_HR_Zip14_PHPeB_IV_3e11_6week_post_injection_1_1'
 
 PathToImageInversion1100 = os.path.join(baseimagepath, r'ACQ_BRUKER_PVMHR_T1_MDEFT_1100X3P1.nii.gz')
 PathToImageInversion1500 = os.path.join(baseimagepath, r'ACQ_BRUKER_PVMHR_T1_MDEFT_1500X4P1.nii.gz')
